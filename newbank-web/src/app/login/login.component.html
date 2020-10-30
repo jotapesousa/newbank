@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="form-sign mb-1">
+    <div class="text-center mb-4">
+      <img class="mb-4" src="./assets/images/N.jpg" alt="" width="72" height="72">
+
+      <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+    </div>
+
+    <div class="form-label-group">
+      <input type="email" id="login" class="form-control" [(ngModel)]="usuario.nome"
+             placeholder="Login" required="" autofocus="">
+      <label for="login">Login</label>
+    </div>
+
+    <div class="form-label-group">
+      <input type="password" id="password" class="form-control" [(ngModel)]="usuario.senha"
+             placeholder="Senha" required="">
+      <label for="password">Senha</label>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="logar()">Entrar</button>
+
+    <p class="mt-5 mb-3 text-muted">© 2020 -</p>
+  </div>
+</div>

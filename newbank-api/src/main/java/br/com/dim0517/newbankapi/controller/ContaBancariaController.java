@@ -25,7 +25,7 @@ public class ContaBancariaController {
         return contaBancariaService.criar(contaBancaria);
     }
 
-    @GetMapping("{idConta}")
+    @GetMapping("/{idConta}")
     public Double saldo(@PathVariable Long idConta) {
         return contaBancariaService.consultarSaldo(idConta);
     }
