@@ -1,6 +1,8 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Usuario} from "../models/usuario";
 import {Router} from "@angular/router";
+import {ContaBancaria} from "../models/ContaBancaria";
+import {ContaBancariaService} from "../conta-bancaria/conta-bancaria.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,29 +10,37 @@ import {Router} from "@angular/router";
 export class AuthService {
 
   private usuarioAutenticado: boolean = false;
+  private contaBancaria: ContaBancaria;
 
   menuEmitter = new EventEmitter<boolean>();
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private contaBancariaService: ContaBancariaService) {
 
   }
 
-  logar(usuario: Usuario) {
-    console.log(usuario);
+  logar(conta: ContaBancaria) {
 
-    if (usuario.nome === 'jotape' &&
-      usuario.senha === '123') {
-      this.usuarioAutenticado = true;
+    this.contaBancariaService.verificarConta(conta.agencia, conta.conta).subscribe(
+      response => {
+        if (response != null) {
+          this.contaBancaria = response;
+        }
 
-      this.menuEmitter.emit(true);
+        if (this.contaBancaria.agencia === conta.agencia && this.contaBancaria.conta === conta.conta && conta.senha.length > 3) {
+          this.usuarioAutenticado = true;
 
-      this.router.navigate(['/conta-bancaria']);
-    } else {
-      this.usuarioAutenticado = false;
+          this.menuEmitter.emit(true);
 
-      this.menuEmitter.emit(false);
-    }
-    console.log(this.usuarioAutenticado);
+          this.router.navigate(['/conta-bancaria'],
+            { queryParams: { agencia: this.contaBancaria.agencia, conta: this.contaBancaria.conta } });
+        } else {
+          this.usuarioAutenticado = false;
+
+          this.menuEmitter.emit(false);
+        }
+      }
+    );
   }
 
   usuarioEstaAutenticado() {
