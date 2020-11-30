@@ -3,56 +3,63 @@
     <h3>Seu Saldo é {{ saldo }}</h3>
   </accordion-group>
   <accordion-group heading="Creditar">
-    <div class="form-row align-items-center">
-      <div class="col-auto">
-        <label class="sr-only" for="conta">Conta</label>
-        <input type="text" class="form-control mb-2" id="conta" placeholder="Informe a conta">
-      </div>
-      <div class="col-auto">
-        <label class="sr-only" for="valor">Valor</label>
-        <div class="input-group mb-2">
-          <input type="text" class="form-control" id="valor" placeholder="Informe o valor">
+    <form [formGroup]="creditarForm" (ngSubmit)="creditar(creditarForm.value)">
+      <div class="form-row align-items-center">
+        <div class="col-auto">
+          <div class="input-group mb-2">
+            <input type="text" currencyMask formControlName="valorCredito" id="valorCredito" class="form-control mb-2"
+                   placeholder="R$ 0,00" maxlength="18" minlength="2"
+                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false}">
+          </div>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-2">Creditar</button>
         </div>
       </div>
-      <div class="col-auto">
-        <button type="submit" class="btn btn-primary mb-2">Creditar</button>
-      </div>
-    </div>
+    </form>
   </accordion-group>
 
   <accordion-group heading="Debitar">
-    <div class="form-row align-items-center">
-      <div class="col-auto">
-        <label class="sr-only" for="contaDebito">Conta</label>
-        <input type="text" class="form-control mb-2" id="contaDebito" placeholder="Informe a conta">
-      </div>
-      <div class="col-auto">
-        <label class="sr-only" for="valorDebito">Valor</label>
-        <div class="input-group mb-2">
-          <input type="text" class="form-control" id="valorDebito" placeholder="Informe o valor">
+    <form [formGroup]="debitarForm" (ngSubmit)="debitar(debitarForm.value)">
+      <div class="form-row align-items-center">
+        <div class="col-auto">
+          <div class="input-group mb-2">
+            <input type="text" currencyMask formControlName="valorDebito" id="valorDebito" class="form-control mb-2"
+                   placeholder="R$ 0,00" maxlength="18" minlength="2"
+                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }">
+          </div>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-2">Debitar</button>
         </div>
       </div>
-      <div class="col-auto">
-        <button type="submit" class="btn btn-primary mb-2">Debitar</button>
-      </div>
-    </div>
+    </form>
   </accordion-group>
 
   <accordion-group heading="Transferir">
-    <div class="form-row align-items-center">
-      <div class="col-auto">
-        <label class="sr-only" for="contaOrigem">Conta Origem</label>
-        <input type="text" class="form-control mb-2" id="contaOrigem" placeholder="Informa a conta de origem">
-      </div>
-      <div class="col-auto">
-        <label class="sr-only" for="contaDestino">Conta Destino</label>
-        <div class="input-group mb-2">
-          <input type="text" class="form-control" id="contaDestino" placeholder="Informe a conta de destino">
+    <form [formGroup]="transferirForm" (ngSubmit)="transferir(transferirForm.value)">
+      <div class="form-row align-items-center">
+        <div class="col-auto">
+          <div class="input-group mb-2">
+            <input type="text" formControlName="agenciaDestino" id="agenciaDestino" class="form-control mb-2" placeholder="Agência">
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="input-group mb-2">
+            <input type="text" formControlName="contaDestino" id="contaDestino" class="form-control mb-2" placeholder="Conta">
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="input-group mb-2">
+            <input type="text" currencyMask formControlName="valorTransferencia" id="valorTransferencia" class="form-control mb-2"
+                   placeholder="R$ 0,00" maxlength="18" minlength="2"
+                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false}">
+          </div>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-2">Transferir</button>
         </div>
       </div>
-      <div class="col-auto">
-        <button type="submit" class="btn btn-primary mb-2">Transferir</button>
-      </div>
-    </div>
+    </form>
   </accordion-group>
 </accordion>

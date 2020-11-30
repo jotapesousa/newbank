@@ -1,8 +1,8 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Usuario} from "../models/usuario";
 import {Router} from "@angular/router";
 import {ContaBancaria} from "../models/ContaBancaria";
 import {ContaBancariaService} from "../conta-bancaria/conta-bancaria.service";
+import {writeLocalStorge} from "../app.module";
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +32,9 @@ export class AuthService {
 
           this.menuEmitter.emit(true);
 
-          this.router.navigate(['/conta-bancaria'],
-            { queryParams: { agencia: this.contaBancaria.agencia, conta: this.contaBancaria.conta } });
+          writeLocalStorge('user_data', JSON.stringify({agencia: this.contaBancaria.agencia, conta: this.contaBancaria.conta } ));
+
+          this.router.navigate(['/conta-bancaria']);
         } else {
           this.usuarioAutenticado = false;
 
