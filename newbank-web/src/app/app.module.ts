@@ -11,15 +11,6 @@ import {AuthGuardService} from "./guards/auth-guard.service";
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import {HttpClientModule} from "@angular/common/http";
 
-
-export function writeLocalStorge(key: string, value: string) {
-  return sessionStorage.setItem(key, value);
-}
-
-export function readLocalStorage(key: string) {
-  return sessionStorage.getItem(key);
-}
-
 @NgModule({
   declarations: [
     AppComponent,

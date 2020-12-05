@@ -1,12 +1,13 @@
 package br.com.dim0517.newbankapi.controller;
 
 import br.com.dim0517.newbankapi.models.ContaBancaria;
-import br.com.dim0517.newbankapi.models.Transacao;
 import br.com.dim0517.newbankapi.services.ContaBancariaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -48,15 +49,19 @@ public class ContaBancariaController {
     }
 
     @PutMapping("/creditar")
-    public ContaBancaria creditar(@RequestBody Transacao transacao) {
-        return contaBancariaService.creditar(transacao.getAgenciaOrigem(), transacao.getContaOrigem(), transacao.getValor());
+    public ContaBancaria creditar(@PathParam("agenciaCredito") String agenciaCredito,
+                                  @PathParam("contaCredito") String contaCredito,
+                                  @PathParam("valor") Double valor) {
+        return contaBancariaService.creditar(agenciaCredito, contaCredito, valor);
     }
 
     @PutMapping("/debitar")
-    public ContaBancaria debitar(@RequestBody Transacao transacao) throws ResponseStatusException {
+    public ContaBancaria debitar(@PathParam("agenciaDebito") String agenciaDebito,
+                                 @PathParam("contaDebito") String contaDebito,
+                                 @PathParam("valor") Double valor) throws ResponseStatusException {
         ContaBancaria contaBancaria;
         try {
-            contaBancaria = contaBancariaService.debitar(transacao.getAgenciaOrigem(), transacao.getContaOrigem(), transacao.getValor());
+            contaBancaria =  contaBancariaService.debitar(agenciaDebito, contaDebito, valor);
         } catch (ResponseStatusException e) {
             throw new ResponseStatusException(HttpStatus.MULTI_STATUS, e.getMessage());
         }
@@ -64,15 +69,16 @@ public class ContaBancariaController {
     }
 
     @PutMapping("/transferir")
-    public ContaBancaria transferir(@RequestBody Transacao transacao) {
-        ContaBancaria contaBancaria;
+    public void transferir(@PathParam("agenciaOrigem") String agenciaOrigem,
+                           @PathParam("contaOrigem") String contaOrigem,
+                           @PathParam("agenciaDestino") String agenciaDestino,
+                           @PathParam("contaDestino") String contaDestino,
+                           @PathParam("valor") Double valor) {
         try {
-            contaBancaria = contaBancariaService.transferir(transacao.getAgenciaOrigem(), transacao.getContaOrigem(),
-                    transacao.getAgenciaDestino(), transacao.getContaDestino(), transacao.getValor());
+            contaBancariaService.transferir(agenciaOrigem, contaOrigem, agenciaDestino, contaDestino, valor);
         } catch (ResponseStatusException e) {
             throw new ResponseStatusException(e.getStatus(), e.getMessage());
         }
-        return contaBancaria;
     }
 
     @GetMapping("/listarTodas")
