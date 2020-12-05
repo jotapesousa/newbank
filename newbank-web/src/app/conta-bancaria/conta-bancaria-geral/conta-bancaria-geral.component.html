@@ -1,0 +1,58 @@
+<accordion [isAnimated]="true" [closeOthers]="true">
+  <accordion-group heading="Saldo">
+    <h3>Seu Saldo é {{ saldo }}</h3>
+  </accordion-group>
+  <accordion-group heading="Creditar">
+    <div class="form-row align-items-center">
+      <div class="col-auto">
+        <label class="sr-only" for="conta">Conta</label>
+        <input type="text" class="form-control mb-2" id="conta" placeholder="Informe a conta">
+      </div>
+      <div class="col-auto">
+        <label class="sr-only" for="valor">Valor</label>
+        <div class="input-group mb-2">
+          <input type="text" class="form-control" id="valor" placeholder="Informe o valor">
+        </div>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-2">Creditar</button>
+      </div>
+    </div>
+  </accordion-group>
+
+  <accordion-group heading="Debitar">
+    <div class="form-row align-items-center">
+      <div class="col-auto">
+        <label class="sr-only" for="contaDebito">Conta</label>
+        <input type="text" class="form-control mb-2" id="contaDebito" placeholder="Informe a conta">
+      </div>
+      <div class="col-auto">
+        <label class="sr-only" for="valorDebito">Valor</label>
+        <div class="input-group mb-2">
+          <input type="text" class="form-control" id="valorDebito" placeholder="Informe o valor">
+        </div>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-2">Debitar</button>
+      </div>
+    </div>
+  </accordion-group>
+
+  <accordion-group heading="Transferir">
+    <div class="form-row align-items-center">
+      <div class="col-auto">
+        <label class="sr-only" for="contaOrigem">Conta Origem</label>
+        <input type="text" class="form-control mb-2" id="contaOrigem" placeholder="Informa a conta de origem">
+      </div>
+      <div class="col-auto">
+        <label class="sr-only" for="contaDestino">Conta Destino</label>
+        <div class="input-group mb-2">
+          <input type="text" class="form-control" id="contaDestino" placeholder="Informe a conta de destino">
+        </div>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-2">Transferir</button>
+      </div>
+    </div>
+  </accordion-group>
+</accordion>
