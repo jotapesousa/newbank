@@ -1,13 +1,13 @@
 package br.com.dim0517.newbankapi.controller;
 
 import br.com.dim0517.newbankapi.models.ContaBancaria;
-import br.com.dim0517.newbankapi.models.Transacao;
+import br.com.dim0517.newbankapi.repository.ContaBancariaRepository;
 import br.com.dim0517.newbankapi.services.ContaBancariaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import java.util.List;
+
+import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping(value = "api/operacoes")
@@ -25,58 +25,37 @@ public class ContaBancariaController {
         return contaBancariaService.criar(contaBancaria);
     }
 
-    @GetMapping("/verificarConta")
-    public ContaBancaria verificarConta(@RequestParam String agencia, @RequestParam String conta) {
-        ContaBancaria contaBancaria;
-        try {
-            contaBancaria = contaBancariaService.verificarConta(agencia, conta);
-        } catch (ResponseStatusException e) {
-            throw new ResponseStatusException(e.getStatus(), e.getMessage());
-        }
-        return contaBancaria;
-    }
-
-    @GetMapping
-    public Double saldo(@RequestParam String agencia, @RequestParam String conta) {
-        Double saldo;
-        try {
-            saldo = contaBancariaService.consultarSaldo(agencia, conta);
-        } catch (ResponseStatusException e) {
-            throw new ResponseStatusException(e.getStatus(), e.getMessage());
-        }
-        return saldo;
+    @GetMapping("{idConta}")
+    public Double saldo(@PathVariable Long idConta) {
+        return contaBancariaService.consultarSaldo(idConta);
     }
 
     @PutMapping("/creditar")
-    public ContaBancaria creditar(@RequestBody Transacao transacao) {
-        return contaBancariaService.creditar(transacao.getAgenciaOrigem(), transacao.getContaOrigem(), transacao.getValor());
+    public ContaBancaria creditar(@PathParam("idContaCredito") Long idContaCredito,
+                                  @PathParam("valor") Double valor) {
+        return contaBancariaService.creditar(idContaCredito, valor);
     }
 
     @PutMapping("/debitar")
-    public ContaBancaria debitar(@RequestBody Transacao transacao) throws ResponseStatusException {
-        ContaBancaria contaBancaria;
+    public ContaBancaria debitar(@PathParam("idContaDebito") Long idContaDebito,
+                                 @PathParam("valor") Double valor) throws Exception {
+        ContaBancaria contaBancaria = null;
         try {
-            contaBancaria = contaBancariaService.debitar(transacao.getAgenciaOrigem(), transacao.getContaOrigem(), transacao.getValor());
-        } catch (ResponseStatusException e) {
-            throw new ResponseStatusException(HttpStatus.MULTI_STATUS, e.getMessage());
+            contaBancaria =  contaBancariaService.debitar(idContaDebito, valor);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
         return contaBancaria;
     }
 
     @PutMapping("/transferir")
-    public ContaBancaria transferir(@RequestBody Transacao transacao) {
-        ContaBancaria contaBancaria;
+    public void transferir(@PathParam("idContaOrigem") Long idContaOrigem,
+                           @PathParam("idContaDestino") Long idContaDestino,
+                           @PathParam("valor") Double valor) {
         try {
-            contaBancaria = contaBancariaService.transferir(transacao.getAgenciaOrigem(), transacao.getContaOrigem(),
-                    transacao.getAgenciaDestino(), transacao.getContaDestino(), transacao.getValor());
-        } catch (ResponseStatusException e) {
-            throw new ResponseStatusException(e.getStatus(), e.getMessage());
-        }
-        return contaBancaria;
-    }
+            contaBancariaService.transferir(idContaOrigem, idContaDestino, valor);
+        } catch (Exception e) {
 
-    @GetMapping("/listarTodas")
-    public List<ContaBancaria> listaContasBancarias() {
-        return contaBancariaService.listarContasBancarias();
+        }
     }
 }
