@@ -75,14 +75,16 @@ public class ContaBancariaService {
         return contaBancaria;
     }
 
-    public void transferir(String agenciaOrigem, String contaOrigem,
-                           String agenciaDestino, String contaDestino, Double valor) throws ResponseStatusException {
+    public ContaBancaria transferir(String agenciaOrigem, String contaOrigem,
+                                    String agenciaDestino, String contaDestino, Double valor) throws ResponseStatusException {
+        ContaBancaria contaBancaria;
         try {
-            contaBancariaRepository.save( creditar(agenciaDestino, contaDestino, valor) );
-            contaBancariaRepository.save( debitar(agenciaOrigem, contaOrigem, valor) );
+            this.creditar(agenciaDestino, contaDestino, valor);
+            contaBancaria = this.debitar(agenciaOrigem, contaOrigem, valor);
         } catch (ResponseStatusException e) {
             throw new ResponseStatusException(HttpStatus.MULTI_STATUS, "Não foi possível realizar a transferência.");
         }
+        return contaBancaria;
     }
 
     public List<ContaBancaria> listarContasBancarias() {

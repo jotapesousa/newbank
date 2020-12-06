@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="newbank-api:war">
+    <output-path>$PROJECT_DIR$/newbank-api/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>newbank-api</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="newbank-api-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="newbank-api:war exploded" />
+    </root>
+  </artifact>
+</component>
