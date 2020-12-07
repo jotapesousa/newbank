@@ -49,6 +49,12 @@ public class ContaBancariaService {
         if (contaBancariaOptional.isPresent()) {
             contaBancaria = contaBancariaOptional.get();
             contaBancaria.creditar(valor);
+
+            if (contaBancaria.getSaldoBonus() == null) {
+                contaBancaria.setSaldoBonus(valor / 100.0);
+            } else {
+                contaBancaria.setSaldoBonus( contaBancaria.getSaldoBonus() + valor/100.0 );
+            }
             contaBancariaRepository.save(contaBancaria);
         }
 

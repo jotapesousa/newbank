@@ -25,6 +25,8 @@ public class ContaBancaria {
 
     private Double saldo;
 
+    private Double saldoBonus;
+
 
     public void creditar(Double valor) {
         this.saldo += valor;
