@@ -2,18 +2,18 @@
   <accordion-group heading="Saldo">
     <h3>Seu Saldo é {{ saldo }}</h3>
   </accordion-group>
-  <accordion-group heading="Creditar">
-    <form [formGroup]="creditarForm" (ngSubmit)="creditar(creditarForm.value)">
+  <accordion-group heading="Depositar">
+    <form [formGroup]="depositarForm" (ngSubmit)="depositar(depositarForm.value)">
       <div class="form-row align-items-center">
         <div class="col-auto">
           <div class="input-group mb-2">
-            <input type="text" currencyMask formControlName="valorCredito" id="valorCredito" class="form-control mb-2"
+            <input type="text" currencyMask formControlName="valorDeposito" id="valorDeposito" class="form-control mb-2"
                    placeholder="R$ 0,00" maxlength="18" minlength="2"
                    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false}">
           </div>
         </div>
         <div class="col-auto">
-          <button type="submit" class="btn btn-primary mb-2">Creditar</button>
+          <button type="submit" class="btn btn-primary mb-2">Depositar</button>
         </div>
       </div>
     </form>

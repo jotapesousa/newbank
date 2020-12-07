@@ -19,7 +19,7 @@ export class ContaBancariaGeralComponent implements OnInit {
   contaBancaria: ContaBancaria;
 
   // Forms
-  creditarForm: FormGroup;
+  depositarForm: FormGroup;
   debitarForm: FormGroup;
   transferirForm: FormGroup;
 
@@ -29,8 +29,8 @@ export class ContaBancariaGeralComponent implements OnInit {
               private message: MessagesService) {
 
     this.user = this.userService.getUserData();
-    this.creditarForm = this.formBuilder.group({
-      valorCredito: ''
+    this.depositarForm = this.formBuilder.group({
+      valorDeposito: ''
     });
     this.debitarForm = this.formBuilder.group({
       valorDebito: ''
@@ -54,22 +54,19 @@ export class ContaBancariaGeralComponent implements OnInit {
     );
   }
 
-  creditar(formCredito) {
-    console.log(formCredito.valorCredito);
-    console.log(this.user);
+  depositar(formDeposito) {
+    let transacao = new Transacao(this.user.agencia, this.user.conta, null, null, formDeposito.valorDeposito);
 
-    let transacao = new Transacao(this.user.agencia, this.user.conta, null, null, formCredito.valorCredito);
-
-    this.contaBancariaService.creditar(transacao).subscribe(
+    this.contaBancariaService.depositar(transacao).subscribe(
       response => {
         if (response != null) {
           this.contaBancaria = response;
           this.saldo = this.contaBancaria.saldo;
-          this.creditarForm.reset();
+          this.depositarForm.reset();
 
-          this.message.success('Valor creditado com sucesso!');
+          this.message.success('Valor depositado com sucesso!');
         } else {
-          this.message.error('Valor Não Creditado!', 'O valor não pode ser creditado a sua conta. Tente novamente!', {});
+          this.message.error('Depósito não realizado!', 'O valor não pode ser depositado a sua conta. Tente novamente!', {});
         }
       }
     );
