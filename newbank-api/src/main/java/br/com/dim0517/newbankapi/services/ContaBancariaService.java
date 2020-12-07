@@ -42,13 +42,13 @@ public class ContaBancariaService {
         }
     }
 
-    public ContaBancaria creditar(String agencia, String conta, Double valor) {
+    public ContaBancaria depositar(String agencia, String conta, Double valor) {
         Optional<ContaBancaria> contaBancariaOptional = contaBancariaRepository.findByAgenciaAndConta(agencia, conta);
 
         ContaBancaria contaBancaria = null;
         if (contaBancariaOptional.isPresent()) {
             contaBancaria = contaBancariaOptional.get();
-            contaBancaria.creditar(valor);
+            contaBancaria.depositar(valor);
             contaBancariaRepository.save(contaBancaria);
         }
 
@@ -79,7 +79,7 @@ public class ContaBancariaService {
                                     String agenciaDestino, String contaDestino, Double valor) throws ResponseStatusException {
         ContaBancaria contaBancaria;
         try {
-            this.creditar(agenciaDestino, contaDestino, valor);
+            this.depositar(agenciaDestino, contaDestino, valor);
             contaBancaria = this.debitar(agenciaOrigem, contaOrigem, valor);
         } catch (ResponseStatusException e) {
             throw new ResponseStatusException(HttpStatus.MULTI_STATUS, "Não foi possível realizar a transferência.");

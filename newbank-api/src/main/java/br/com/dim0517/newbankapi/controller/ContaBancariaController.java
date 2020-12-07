@@ -47,9 +47,9 @@ public class ContaBancariaController {
         return saldo;
     }
 
-    @PutMapping("/creditar")
-    public ContaBancaria creditar(@RequestBody Transacao transacao) {
-        return contaBancariaService.creditar(transacao.getAgenciaOrigem(), transacao.getContaOrigem(), transacao.getValor());
+    @PutMapping("/depositar")
+    public ContaBancaria depositar(@RequestBody Transacao transacao) {
+        return contaBancariaService.depositar(transacao.getAgenciaOrigem(), transacao.getContaOrigem(), transacao.getValor());
     }
 
     @PutMapping("/debitar")

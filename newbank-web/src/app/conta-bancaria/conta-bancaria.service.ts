@@ -28,8 +28,8 @@ export class ContaBancariaService {
       {params: HttpHelper.generateQueryParams(params)});
   }
 
-  public creditar(transacao: Transacao): Observable<any> {
-    return this.http.put<ContaBancaria>(`${this.api_ref}/api/operacoes/creditar`, transacao);
+  public depositar(transacao: Transacao): Observable<any> {
+    return this.http.put<ContaBancaria>(`${this.api_ref}/api/operacoes/depositar`, transacao);
   }
 
   public debitar(transacao: Transacao): Observable<any> {
